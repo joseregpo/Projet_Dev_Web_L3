@@ -1,8 +1,19 @@
 import { React, useCallback, useRef, useState } from "react";
 import { EyeFill } from "react-bootstrap-icons";
 import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useDispatch } from 'react-redux'; 
+import { userConnect } from '../store'
 
 export default function Auth() {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [register, setRegister] = useState(false);
@@ -28,7 +39,12 @@ export default function Auth() {
       fetch(url, requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          dispatch(userConnect({
+            token: data.token,
+            username: data.name,
+            email: data.email,
+            id: data.id,
+          })) 
           navigate("/home", { replace: true })
         });
     } else {
@@ -80,14 +96,18 @@ export default function Auth() {
         <h1>{register ? "Inscription" : "Connexion"}</h1>
         {register && (
           <div className="mb-3">
-            <label className="form-label">Pseudo</label>
-            <input
-              ref={refPseudo}
-              type="text"
-              className="form-control"
-              placeholder="Martin Cruchon"
-            />
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="standard"/>
+          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <Input id="standard-adornment-password" type={visibility ? 'text' : 'password'} endAdornment={
+              <InputAdornment position="end">
+                <IconButton aria-label="toggle password visibility" onClick={toggleVisibility}>
+                  {visibility ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
           </div>
+          
         )}
         <div className="mb-3">
           <label className="form-label">Adresse mail</label>
@@ -158,4 +178,4 @@ export default function Auth() {
       </div>
     </div>
   );
-}
+        }
