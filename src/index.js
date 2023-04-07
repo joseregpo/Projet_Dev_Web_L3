@@ -43,7 +43,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/champions",
-        loader: () => champions(),
         element: <AllCards/>,
       }
     ],

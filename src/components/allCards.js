@@ -5,9 +5,25 @@ import { Box, Grid } from '@mui/material';
 import { useLoaderData  } from 'react-router-dom';
 export default function AllCards(){
 
-    const user = useSelector(state => state);
-    const champions = useLoaderData("root");
-    console.log(champions);
+    const [champions, setChampions] = useState([])
+    useEffect(() => {    
+        fetch("http://localhost:3001/cards")
+            .then(response => response.json())
+            .then(response => {
+                const res = []
+                for (const c of response) {
+                    let champ = {
+                        id: c.id,
+                        nomChamp : c.key,
+                        imgUrl : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+c.key+"_0.jpg",
+                        desc: c.title,
+                    };
+                    res.push(champ)
+                }
+                setChampions(res);
+            }); 
+    }, []);
+    // en le prenant depuis le store
     const championCards = champions.map((champ) =>{
         return (
             <Grid item width="10%">
@@ -19,12 +35,17 @@ export default function AllCards(){
         <div>
             <Box sx={{ 
                 flexGrow: 1,
-                width: "100%"
+                width: "100%",
+                justifyItems: "center",
+                display:"flex"
             }}>
                 <Grid 
                 container 
                 spacing={4} 
                 display="flex"
+                width="90%"
+                alignSelf="center"
+                justifySelf="center"
                 justifyContent="space-around"
                 justifyItems="flex-start"
                 >
