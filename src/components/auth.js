@@ -8,19 +8,21 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
 import { useDispatch } from "react-redux";
 import { userConnect } from "../store";
 
 export default function Auth() {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [register, setRegister] = useState(false);
   const [visibilityPassword, setVisibilityPassword] = useState(false);
-  const [visibilityConfirmPassword, setVisibilityConfirmPassword] = useState(false);
+  const [visibilityConfirmPassword, setVisibilityConfirmPassword] =
+    useState(false);
 
   const refPseudo = useRef(null);
   const refEmail = useRef(null);
@@ -32,8 +34,8 @@ export default function Auth() {
   }, []);
 
   const toggleVisibilityConfirmPassword = useCallback(() => {
-    setVisibilityConfirmPassword((current) => !current)
-  }, [])
+    setVisibilityConfirmPassword((current) => !current);
+  }, []);
 
   const toggleRegister = useCallback(() => {
     setRegister((current) => !current);
@@ -77,7 +79,7 @@ export default function Auth() {
       refConfirmPassword.current.value !== ""
     ) {
       if (refPassword.current.value === refConfirmPassword.current.value) {
-        console.log(refPassword.current.value)
+        console.log(refPassword.current.value);
         console.log(refConfirmPassword.current.value);
         const url = "http://localhost:3001/user";
 
@@ -102,76 +104,126 @@ export default function Auth() {
   };
 
   return (
-    <Stack direction="column" spacing={2} sx={{
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -60%)',
-      zIndex: 1,
-      backgroundColor: 'white',
-      boxShadow: '0px 0px 8px rgba(0, 0, 0, 0.1)',
-      width: '80%',
-      maxWidth: '400px',
-      p: 4,
-      borderRadius: 8
-    }}>
-      <Box
-        component="form"
+      <Stack
+        direction="column"
+        spacing={2}
         sx={{
-          "& > :not(style)": { m: 1 },
-          display: 'flex', flexDirection: 'column'
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -60%)",
+          zIndex: 1,
+          backgroundColor: "white",
+          boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.1)",
+          width: "80%",
+          maxWidth: "400px",
+          p: 4,
+          borderRadius: 8,
         }}
-        noValidate
-        autoComplete="off"
       >
-        <h1>{register ? "Inscription" : "Connexion"}</h1>
-        {register && (<TextField id="standard-basic" label="Pseudo" variant="standard" inputRef={refPseudo}/>)}
-        <TextField id="standard-basic" label="Adresse mail" variant="standard" inputRef={refEmail}/>
-        <FormControl sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Mot de passe</InputLabel>
-          <Input
-            inputRef={refPassword}
-            id="standard-adornment-password"
-            type={visibilityPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleVisibilityPassword}
-                >
-                  {visibilityPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1 },
+            display: "flex",
+            flexDirection: "column",
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <h1 style={{color: "black"}}>{register ? "Inscription" : "Connexion"}</h1>
+          {register && (
+            <TextField
+              id="standard-basic"
+              label="Pseudo"
+              variant="standard"
+              inputRef={refPseudo}
+            />
+          )}
+          <TextField
+            id="standard-basic"
+            label="Adresse mail"
+            variant="standard"
+            inputRef={refEmail}
           />
-        </FormControl>
-        {register && (<FormControl sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Confirmation</InputLabel>
-          <Input
-            inputRef={refConfirmPassword}
-            id="standard-adornment-password"
-            type={visibilityConfirmPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleVisibilityConfirmPassword}
+          <FormControl sx={{ m: 1 }} variant="standard">
+            <InputLabel htmlFor="standard-adornment-password">
+              Mot de passe
+            </InputLabel>
+            <Input
+              inputRef={refPassword}
+              id="standard-adornment-password"
+              type={visibilityPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleVisibilityPassword}
+                  >
+                    {visibilityPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          {register && (
+            <FormControl sx={{ m: 1 }} variant="standard">
+              <InputLabel htmlFor="standard-adornment-password">
+                Confirmation
+              </InputLabel>
+              <Input
+                inputRef={refConfirmPassword}
+                id="standard-adornment-password"
+                type={visibilityConfirmPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={toggleVisibilityConfirmPassword}
+                    >
+                      {visibilityConfirmPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          )}
+          <Button style={{ backgroundColor: "#5b5b5b"}} variant="contained" onClick={register ? signup : login}>
+            {register ? "Inscription" : "Connexion"}
+          </Button>
+
+          <div style={{ textAlign: "center" }}>
+            {register ? (
+              <p style={{color: "black"}}>
+                Déjà un compte ?{" "}
+                <span
+                  style={{ textDecoration: "underline", cursor: "pointer" }}
+                  onClick={toggleRegister}
                 >
-                  {visibilityConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>)}
-        <Button variant="contained" onClick={register ? signup : login}>{register ? "Inscription" : "Connexion"}</Button>
+                  Connectez-vous
+                </span>
+              </p>
+            ) : (
+              <p style={{color: "black"}}>
+                Pas encore de compte ?{" "}
+                <span
+                  style={{ textDecoration: "underline", cursor: "pointer" }}
+                  onClick={toggleRegister}
+                >
+                  Inscrivez-vous
+                </span>
+              </p>
+            )}
+          </div>
 
-        <div style={{ textAlign: 'center' }}>
-          {register ? <p>Déjà un compte ? <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={toggleRegister}>Connectez-vous</span></p> : <p>Pas encore de compte ? <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={toggleRegister}>Inscrivez-vous</span></p> }
-        </div>
-
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-
-      </Box>
-    </Stack>
+          {error && (
+            <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+          )}
+        </Box>
+      </Stack>
   );
 }
