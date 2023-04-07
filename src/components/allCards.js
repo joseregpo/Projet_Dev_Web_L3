@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; 
-import NavBar from "./nav";
 import Champion from './championCard';
 import { Box, Grid } from '@mui/material';
-import { useLocation } from 'react-router-dom';
-
-export default function AllCards(props){
+import { useLoaderData  } from 'react-router-dom';
+export default function AllCards(){
 
     const user = useSelector(state => state);
-    const location = useLocation()
-    console.log(location)
-    const championCards = location.champions?.map((champ) =>{
+    const champions = useLoaderData("root");
+    console.log(champions);
+    const championCards = champions.map((champ) =>{
         return (
             <Grid item width="10%">
-                <Champion key={champ.id} nomChamp={champ.nomChamp} imgUrl={champ.imgUrl} desc={champ.desc } fullChamp={champ}/>
+                <Champion nomChamp={champ.nomChamp} imgUrl={champ.imgUrl} desc={champ.desc } fullChamp={champ}/>
             </Grid>
         )
     })

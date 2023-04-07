@@ -31,6 +31,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    id: "root",
     children: [
       {
         path: "/home",
@@ -42,8 +43,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/champions",
-        element: <AllCards/>
-
+        loader: () => champions(),
+        element: <AllCards/>,
       }
     ],
   },
