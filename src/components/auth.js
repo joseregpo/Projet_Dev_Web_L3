@@ -198,7 +198,7 @@ export default function Auth() {
 
           <div style={{ textAlign: "center" }}>
             {register ? (
-              <p>
+              <p style={{color: "black"}}>
                 Déjà un compte ?{" "}
                 <span
                   style={{ textDecoration: "underline", cursor: "pointer" }}
