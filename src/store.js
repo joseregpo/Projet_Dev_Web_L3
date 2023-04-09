@@ -7,6 +7,8 @@ const userSlice = createSlice({
         username: "",
         email: "",
         id: "",
+        myDeck : [],
+        champions : [],
     },
 
     reducers: {
@@ -21,11 +23,18 @@ const userSlice = createSlice({
             state.username = action.payload.username;
             state.id = action.payload.id;
             state.email = action.payload.email;
-        }
+        },
+        pickACard: (state, action) => {
+            state.myDeck.push(action.payload.champion);
+        },
+        emptyMyDeck: (state) => {
+            state.myDeck.length = [];
+        },
+
     }
 })
 
-export const { userDisconnect, userConnect } = userSlice.actions;
+export const { userDisconnect, userConnect, pickACard, emptyMyDeck } = userSlice.actions;
 
 export const store = configureStore({
     reducer: userSlice.reducer
