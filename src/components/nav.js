@@ -43,6 +43,10 @@ export default function NavBar() {
 
   const match = () => {};
 
+  const login = () => {
+    navigate("/auth")
+  }
+
   const logout = () => {
     const url = "http://localhost:3001/logout";
 
@@ -86,8 +90,7 @@ export default function NavBar() {
   };
 
   const configureDeck = () => {
-    console.log("lala")
-    navigate("/champions")
+    navigate("/deck")
   };
 
   return (
@@ -99,6 +102,9 @@ export default function NavBar() {
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 League Of Stones
               </Typography>
+              <Button size="large" color="inherit" onClick={login}>
+                Connexion
+              </Button>
             </Toolbar>
           </AppBar>
         </Box>

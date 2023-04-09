@@ -1,42 +1,13 @@
-import { useEffect, useState } from "react";
 import Champion from "./championCard";
 import { Box, Grid } from "@mui/material";
 
-export default function AllCards() {
-    
-  const [champions, setChampions] = useState([]);
+export default function AllCards(props) {
 
-  useEffect(() => {
-    fetch("http://localhost:3001/cards")
-      .then((response) => response.json())
-      .then((response) => {
-        const res = [];
-        for (const c of response) {
-          let champ = {
-            id: c.id,
-            nomChamp: c.key,
-            imgUrl:
-              "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/" +
-              c.key +
-              "_0.jpg",
-            desc: c.title,
-          };
-          res.push(champ);
-        }
-        setChampions(res);
-      });
-  }, []);
-  // en le prenant depuis le store
-
-  const championCards = champions.map((champ) => {
+  const championCards = props.champions.map((champ) => {
     return (
-      <Grid item width="30%">
-        <Champion
-          nomChamp={champ.nomChamp}
-          imgUrl={champ.imgUrl}
-          desc={champ.desc}
-          fullChamp={champ}
-        />
+      <Grid item width="33%"> 
+      {/* onClick={props.onClick(champ)} */}
+        <Champion nomChamp={champ.name} k={champ.key} info={champ.info} fullChamp={champ} />
       </Grid>
     );
   });

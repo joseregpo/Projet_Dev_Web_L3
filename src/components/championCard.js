@@ -8,8 +8,13 @@ import Typography from "@mui/material/Typography";
 
 export default function Champion(props) {
   const nomChamp = props.nomChamp;
-  const imgUrl = props.imgUrl;
-  const desc = props.desc;
+  const imgUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${props.k}_0.jpg`
+  const attack = props.info.attack
+  const defense = props.info.defense
+  const difficulty = props.info.difficulty
+  const magic = props.info.magic
+
+  const info = "Attaque : " + attack + "\nDefense : " + defense + "\nDifficulty : " + difficulty + "\nMagic : " + magic
 
   return (
     <Card sx={{ maxWidth: "100%", height: "100%" }}>
@@ -19,7 +24,7 @@ export default function Champion(props) {
           {nomChamp}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {desc}
+          {info}
         </Typography>
       </CardContent>
       <CardActions>
