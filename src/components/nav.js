@@ -85,8 +85,9 @@ export default function NavBar() {
     }
   };
 
-  const cards = () => {
-    // navigate("/champions")
+  const configureDeck = () => {
+    console.log("lala")
+    navigate("/champions")
   };
 
   return (
@@ -111,9 +112,9 @@ export default function NavBar() {
                   size="large"
                   color="inherit"
                   style={{ marginLeft: "60px" }}
-                  onClick={cards}
+                  onClick={configureDeck}
                 >
-                  Cards
+                  Deck
                 </Button>
                 <Button
                   size="large"
@@ -190,7 +191,7 @@ export default function NavBar() {
                     autoFocus
                     inputRef={mail}
                     margin="dense"
-                    id="name"
+                    id="mail"
                     label="Adresse mail"
                     type="email"
                     fullWidth
@@ -199,7 +200,7 @@ export default function NavBar() {
                   <TextField
                     inputRef={password}
                     margin="dense"
-                    id="name"
+                    id="password"
                     label="Mot de passe"
                     type="password"
                     fullWidth

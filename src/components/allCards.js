@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import Champion from "./championCard";
 import { Box, Grid } from "@mui/material";
 
-
 export default function AllCards() {
-
+    
   const [champions, setChampions] = useState([]);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ export default function AllCards() {
   }, []);
   // en le prenant depuis le store
 
-
   const championCards = champions.map((champ) => {
     return (
       <Grid item width="30%">
@@ -44,7 +42,7 @@ export default function AllCards() {
   });
   return (
     <>
-        <h1>Champions</h1>
+      <h1>Champions</h1>
       <Box
         sx={{
           flexGrow: 1,

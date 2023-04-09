@@ -8,26 +8,26 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Auth from './components/auth';
 import Home from './components/home';
+import AllCards from './components/allCards';
 import Match from './components/match';
-import ChampionDeck from './components/champion_deck';
 
-// const champions = () =>{
-//   const res = []
-//   fetch("http://localhost:3001/cards")
-//   .then(response => response.json())
-//   .then(response => {
-//       for (const c of response) {
-//           let champ = {
-//               id: c.id,
-//               nomChamp : c.key,
-//               imgUrl : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+c.key+"_0.jpg",
-//               desc: c.title,
-//           };
-//           res.push(champ)
-//       }
-//     }); 
-//   return res;
-// }
+const champions = () =>{
+  const res = []
+  fetch("http://localhost:3001/cards")
+  .then(response => response.json())
+  .then(response => {
+      for (const c of response) {
+          let champ = {
+              id: c.id,
+              nomChamp : c.key,
+              imgUrl : "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/"+c.key+"_0.jpg",
+              desc: c.title,
+          };
+          res.push(champ)
+      }
+    }); 
+  return res;
+}
 
 const router = createBrowserRouter([
   {
@@ -44,8 +44,8 @@ const router = createBrowserRouter([
         element: <Auth />
       },
       {
-        path: "/deck",
-        element: <ChampionDeck/>,
+        path: "/champions",
+        element: <AllCards/>,
       },
       {
         path: "/match",
