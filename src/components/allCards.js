@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import Champion from "./championCard";
 import { Box, Grid } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+
+
 export default function AllCards() {
+
   const [champions, setChampions] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:3001/cards")
       .then((response) => response.json())
@@ -26,9 +28,11 @@ export default function AllCards() {
       });
   }, []);
   // en le prenant depuis le store
+
+
   const championCards = champions.map((champ) => {
     return (
-      <Grid item width="10%">
+      <Grid item width="30%">
         <Champion
           nomChamp={champ.nomChamp}
           imgUrl={champ.imgUrl}
@@ -39,18 +43,21 @@ export default function AllCards() {
     );
   });
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Grid container spacing={4} width="90%" justifyContent="space-around">
-        {championCards}
-      </Grid>
-    </Box>
+    <>
+        <h1>Champions</h1>
+      <Box
+        sx={{
+          flexGrow: 1,
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Grid container spacing={4} width="90%" justifyContent="space-around">
+          {championCards}
+        </Grid>
+      </Box>
+    </>
   );
 }
