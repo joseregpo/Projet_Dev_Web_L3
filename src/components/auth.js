@@ -62,6 +62,7 @@ export default function Auth() {
               username: data.name,
               email: data.email,
               id: data.id,
+              
             })
           );
           navigate("/home", { replace: true });
