@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Auth from './components/auth';
 import Home from './components/home';
 import AllCards from './components/allCards';
+import Match from './components/match';
 
 const champions = () =>{
   const res = []
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/champions",
         element: <AllCards/>,
+      },
+      {
+        path: "/match",
+        element: <Match />
       }
     ],
   },
