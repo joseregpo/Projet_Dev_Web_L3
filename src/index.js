@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Auth from './components/auth';
 import Home from './components/home';
+import Matchmaking from './components/matchmaking/matchmaking';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,16 @@ const router = createBrowserRouter([
         path: "/auth",
         element: <Auth />
       },
+      //=================
+      //=== A ENLEVER ===
+      //=================
+      {
+        path: "/matchmaking",
+        element: <Matchmaking />
+      },
+      //===========
+      //=== FIN === 
+      //===========
     ],
   },
 ]);
