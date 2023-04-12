@@ -33,12 +33,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function Matchmaking() {
 //INITIALISATION
-  
   //Définir qu'on veut se BAGARRER
   let matchmaking = new Object;
   const user = useSelector(state => state)
   const token = user.token
-  console.log(token)
+  //console.log(token)
+
+  //unparticipate()
+
+  function unparticipate()
+  {
+    const url = "http://localhost:3001/matchmaking/unparticipate";
+    const requOptions = {
+      method: "GET",
+      headers: { "WWW-Authenticate": token },
+    };
+    fetch(url, requOptions).then((response) => console.log(response));
+  }
+
 
   //Participation de soi-même au combat
   const url = "http://localhost:3001/matchmaking/participate";
@@ -51,8 +63,8 @@ export default function Matchmaking() {
                                                                 matchmaking.matchmakingId = data.matchmakingId;
                                                                 matchmaking.request = data.request;
                                                             }));
-  console.log("Mon matchmaking : ")
-  console.log(matchmaking);
+  //console.log("Mon matchmaking : ")
+  //console.log(matchmaking);
 
   //Requete toute les 10 secondes pour savoir qui veut se bagarrer
   const intervalID = setInterval(updateRequest, 10000);
@@ -68,6 +80,27 @@ export default function Matchmaking() {
                                                                   matchmaking.request = data.request;
                                                               }));
     //console.log(matchmaking);
+  }
+
+  const intervalRequest = setInterval(printRequest,2000)
+  function printRequest()
+  {
+    if(matchmaking.request.length > 0)
+    {
+      let demande  = matchmaking.request[0]
+      const url = "htpp://localhost:3001/matchmaking/request/:"+ demande 
+      const requestOptions = {
+        method: "GET",
+        headers:  {
+                  "WWW-Authenticate": token,
+                  },
+      };
+      fetch(url,requestOptions).then((response) => console.log(response))
+    }
+    else
+    {
+
+    }
   }
 
   //Récuperer la liste des utilisateurs qui veulent se BAGARRER
@@ -96,31 +129,16 @@ export default function Matchmaking() {
 
 
   //Limite de 15 bagarreurs
-  // let tabBag = [];
-  // if (tableauBagarreur.length > 15)
-  // {
-  //   for(let i=0;i<15;i++) 
-  //   {
-  //     tabBag.push(tableauBagarreur[i]);   
-  //   }
-  // }
-  // else
-  // {
-  //   console.log("Tableau bagarreur")
-  //   console.log(tableauBagarreur)
-  //   tabBag = tableauBagarreur;
-  // }
-  // console.log("TabBag : ")
-  // console.log(tabBag)
 
   function sendRequest(matchmakingId){
-    const urlRequest = "http://localhost:3001/matchmaking/request";
+    console.log(matchmakingId)
+    const urlRequest = "http://localhost:3001/matchmaking/request/:" + matchmakingId;
     const rO = {
       method: "GET",
       headers: { "WWW-Authenticate" : token,
-                 "matchmakingId" : matchmakingId },
+                 "matchmakingId" : matchmakingId},
   };
-    fetch(urlRequest, rO).then(response => response.json());
+    fetch(urlRequest, rO).then(response => console.log(response));
   }
 
 
@@ -143,7 +161,7 @@ export default function Matchmaking() {
                 <Item>
                   <Button 
                     onClick={() => {
-                                    //sendRequest(player.matchmakingId);
+                                    sendRequest(player.matchmakingId);
                                     //Disable si possible
                                     console.log("MONIQUE");
                                    }
@@ -156,8 +174,8 @@ export default function Matchmaking() {
                 </Item>
               </Grid>
     });
-  console.log("Grid : ")
-  console.log(grid)
+  //console.log("Grid : ")
+  //console.log(grid)
   
   const [open, setOpen] = React.useState(false);
 
@@ -192,6 +210,7 @@ export default function Matchmaking() {
         >
           <DialogTitle>{"Voulez-vous défier X ?"}</DialogTitle>
           <DialogContent>
+
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Refuser</Button>
