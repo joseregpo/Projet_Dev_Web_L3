@@ -82,24 +82,17 @@ export default function Matchmaking() {
     //console.log(matchmaking);
   }
 
-  const intervalRequest = setInterval(printRequest,2000)
+  const intervalRequest = setInterval(printRequest,10000)
   function printRequest()
   {
+    //console.log(matchmaking)
     if(matchmaking.request.length > 0)
     {
       let demande  = matchmaking.request[0]
-      const url = "htpp://localhost:3001/matchmaking/request/:"+ demande 
-      const requestOptions = {
-        method: "GET",
-        headers:  {
-                  "WWW-Authenticate": token,
-                  },
-      };
-      fetch(url,requestOptions).then((response) => console.log(response))
-    }
-    else
-    {
-
+      let nom = demande.name
+      let id = demande.matchmakingId
+      //Afficher le pop up
+      handleClickOpen(nom,id)
     }
   }
 
@@ -112,6 +105,7 @@ export default function Matchmaking() {
                                                                 // console.log("le GetALLL : ")
                                                                 // console.log(data);
                                                                 let tableauBagarreur = [];
+                                                                //Limite de 15 bagarreurs
                                                                 if (tableauBagarreur.length > 15)
                                                                 {
                                                                   for(let i=0;i<15;i++) 
@@ -127,16 +121,30 @@ export default function Matchmaking() {
                                                         }));
   }, []);
 
-
-  //Limite de 15 bagarreurs
-
   function sendRequest(matchmakingId){
-    console.log(matchmakingId)
-    const urlRequest = "http://localhost:3001/matchmaking/request/:" + matchmakingId;
+    //console.log(matchmakingId)
+    const urlRequest = "http://localhost:3001/matchmaking/request?matchmakingId=" + matchmakingId;
     const rO = {
       method: "GET",
-      headers: { "WWW-Authenticate" : token,
-                 "matchmakingId" : matchmakingId},
+      headers: { "WWW-Authenticate" : token,},
+  };
+    fetch(urlRequest, rO).then(response => console.log(response));
+  }
+
+  function acceptRequest(matchmakingId){
+    const urlRequest = "http://localhost:3001/matchmaking/acceptRequest?matchmakingId=" + matchmakingId;
+    const rO = {
+      method: "GET",
+      headers: { "WWW-Authenticate" : token,},
+  };
+    fetch(urlRequest, rO).then(response => console.log(response));
+  }
+
+  function declineRequest(matchmakingId){
+    const urlRequest = "http://localhost:3001/matchmaking/declineRequest?matchmakingId=" + matchmakingId;
+    const rO = {
+      method: "GET",
+      headers: { "WWW-Authenticate" : token,},
   };
     fetch(urlRequest, rO).then(response => console.log(response));
   }
@@ -168,7 +176,6 @@ export default function Matchmaking() {
                             }
                   >
                     <Avatar sx={{ width: 112, height: 112 }} src={indexIMGButton.get(player.matchmakingId)} /><br/>
-                  
                   </Button>
                   <p>{player.name}</p>
                 </Item>
@@ -178,22 +185,38 @@ export default function Matchmaking() {
   //console.log(grid)
   
   const [open, setOpen] = React.useState(false);
+  const [nom, setNom] = React.useState('');
+  const [matchId, setMatchId] = React.useState('');
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (name,matchId) => {
     setOpen(true);
+    setNom(name);
+    setMatchId(matchId);
+    
   };
 
   const handleClose = () => {
     setOpen(false);
+    //declineRequest(matchId);
+    let remove = matchmaking.request.slice(1);
+    matchmaking.request = [];
+    //console.log(matchmaking)
   };
+
+  const handleAccept = (matchmakingId) => {
+    //appeler la méthode
+    setOpen(false);
+    acceptRequest(matchId);
+    matchmaking.request = [];
+  }
 
   return ( 
     //Créer les composants en fonction du nombre de participants
 
     <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
+        {/* <Button variant="outlined" onClick={handleClickOpen}>
           Person X
-        </Button>
+        </Button> */}
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             {grid}
@@ -208,13 +231,13 @@ export default function Matchmaking() {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle>{"Voulez-vous défier X ?"}</DialogTitle>
+          <DialogTitle>{`Voulez-vous défier ${nom} ?`}</DialogTitle>
           <DialogContent>
 
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Refuser</Button>
-            <Button onClick={handleClose}>Accepter</Button>
+            <Button onClick={handleAccept}>Accepter</Button>
           </DialogActions>
         </Dialog>
     </div>
