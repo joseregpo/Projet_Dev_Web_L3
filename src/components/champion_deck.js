@@ -2,29 +2,18 @@ import { React, useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import AllCards from "./allCards";
 import Deck from "./deck";
+import { useDispatch } from "react-redux";
+import { pickACard } from "../store";
 
 export default function ChampionDeck() {
   const [champions, setChampions] = useState([]);
   const [deck, setDeck] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch("http://localhost:3001/cards")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        // const res = [];
-        // for (const c of response) {
-        //   let champ = {
-        //     id: c.id,
-        //     nomChamp: c.key,
-        //     imgUrl:
-        //       "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/" +
-        //       c.key +
-        //       "_0.jpg",
-        //     desc: c.title,
-        //   };
-        //   res.push(champ);
-        // }
         setChampions(data);
       });
   }, []);
@@ -51,7 +40,11 @@ export default function ChampionDeck() {
       setChampions(copyChamp);
       setDeck(copyDeck);
     }
-    console.log(deck)
+    dispatch(
+      pickACard({
+        deck : deck
+      })
+    );
   };
 
   return (
@@ -60,7 +53,7 @@ export default function ChampionDeck() {
         <AllCards champions={champions} onClick={addCard}/>
       </Grid>
       <Grid item xs={6}>
-        <Deck deck={deck} />
+        <Deck deck={deck}/>
       </Grid>
     </Grid>
   );

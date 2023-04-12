@@ -21,8 +21,7 @@ export default function Auth() {
   const [error, setError] = useState("");
   const [register, setRegister] = useState(false);
   const [visibilityPassword, setVisibilityPassword] = useState(false);
-  const [visibilityConfirmPassword, setVisibilityConfirmPassword] =
-    useState(false);
+  const [visibilityConfirmPassword, setVisibilityConfirmPassword] = useState(false);
 
   const refPseudo = useRef(null);
   const refEmail = useRef(null);

@@ -8,7 +8,6 @@ const userSlice = createSlice({
         email: "",
         id: "",
         myDeck : [],
-        champions : [],
     },
 
     reducers: {
@@ -25,7 +24,10 @@ const userSlice = createSlice({
             state.email = action.payload.email;
         },
         pickACard: (state, action) => {
-            state.myDeck.push(action.payload.champion);
+            // state.myDeck.push(action.payload.champion);
+            state.myDeck = action.payload.deck;
+            console.log(state.myDeck);
+            console.log(state.token)
         },
         emptyMyDeck: (state) => {
             state.myDeck.length = [];

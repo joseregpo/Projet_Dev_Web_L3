@@ -28,7 +28,7 @@ export default function Champion(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Ajouter</Button>
+        <Button size="small" onClick={() => props.onClick(nomChamp)}>Ajouter</Button>
         <Button size="small">Infos</Button>
       </CardActions>
     </Card>
